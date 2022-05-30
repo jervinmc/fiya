@@ -15,6 +15,7 @@ import 'package:flutter_dialogflow/flutter_dialogflow.dart';
 import 'package:flutter_dialogflow/v2/dialogflow_v2.dart';
 import 'package:googleapis/dialogflow/v2.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'dart:math';
 
 class ChatPage extends StatefulWidget {
   @override
@@ -26,16 +27,25 @@ final ScrollController _controller = ScrollController();
 class _ChatPageState extends State<ChatPage> {
   late DialogflowApi _dialog;
   bool isListening = false;
+  String sessionID = '';
   // void response()async{
   //   AuthGoogle authGoogle = await AuthGoogle(fileJson: 'assets/fresh-arcade-347405-690f08366e0f.json');
   //     Dialogflow dialogflow = await Dialogflow(authGoogle:authGoogle);
   //       AIResponse response = await dialogflow.detectIntent("Hi!!!");
 
   // }
+  String getRandomString(int length) {
+  const characters =
+      '+-*=?AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+  Random random = Random();
+  return String.fromCharCodes(Iterable.generate(
+      length, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
+}
   var projectid = "fresh-arcade-347405";
   _requestChatBot(String text) async {
+    print(text);
     var dialogSessionId =
-        "projects/$projectid/agent/sessions/flutter-dialogflow";
+        "projects/$projectid/agent/sessions/${sessionID}";
     Map data = {
       "queryInput": {
         "text": {
@@ -117,8 +127,16 @@ class _ChatPageState extends State<ChatPage> {
 
   void initState() {
     super.initState();
+    print("RGSRGRGSRGSREGSREGFSDGSRE");
+    sessionID = getRandomString(10);
+    print(sessionID);
     conversations.add({
         "message": "Hi! I'm FiYA, your personal chatbot assistant, how may I help you?",
+        "type": BubbleType.sendBubble,
+        "isMe": false
+      });
+       conversations.add({
+        "message": "You can type 'suggestion' for a list of FAQs about the university to start!",
         "type": BubbleType.sendBubble,
         "isMe": false
       });
@@ -138,6 +156,7 @@ class _ChatPageState extends State<ChatPage> {
         body: Stack(
           children: [
             Container(
+              color: Color(0xffeafaec),
               padding: EdgeInsets.only(bottom: 50),
               child: ListView.builder(
                   controller: _controller,

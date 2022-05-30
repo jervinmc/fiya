@@ -77,6 +77,11 @@ flutter:
   assets:
     - "config/credentials.json"
     - assets/images/logo.png
+    - assets/images/news1.jpeg
+    - assets/images/news2.jpeg
+    - assets/images/news3.jpeg
+    - assets/images/news.jpg
+    - assets/images/news4.png
     - assets/fresh-arcade-347405-690f08366e0f.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

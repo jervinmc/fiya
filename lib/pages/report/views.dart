@@ -1,7 +1,12 @@
+import 'package:fiya/pages/config/global.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 class Report extends StatefulWidget {
   const Report({Key? key}) : super(key: key);
 
@@ -14,11 +19,14 @@ class _ReportState extends State<Report> {
   TextEditingController _contact_number = new TextEditingController();
     TextEditingController _message = new TextEditingController();
     TextEditingController _email = new TextEditingController();
+      static String BASE_URL = ''+Global.url+'/report/';
     
     String username = 'fiyadev@gmail.com';
   String password = 'fiya12345';
 
   sendEmail() async{
+    final prefs = await SharedPreferences.getInstance();
+    var _id = prefs.getInt("_id");
     loads=true;
     setState(() {
       
@@ -35,8 +43,15 @@ class _ReportState extends State<Report> {
     ..html = "Contact Number : ${_contact_number.text} Email : ${_email.text} <h1>${_message.text}</h1>\n<p></p>";
 
   try {
+    var params = {
+        "user_id":_id,
+       "message":_message.text,
+       "is_respo":"no",
+       "status":""
+      };
     final sendReport = await send(message, smtpServer);
     print('Message sent: ' + sendReport.toString());
+    final response = await http.post(Uri.parse(BASE_URL),headers: {"Content-Type": "application/json"},body:json.encode(params));
     AwesomeDialog(
                 context: context,
                 dialogType:DialogType.SUCCES,
@@ -68,6 +83,7 @@ class _ReportState extends State<Report> {
         title: Text('Report'),
       ),
       body: Container(
+        color: Color(0xffeafaec),
         child: Column(
           children: [
             // Container(

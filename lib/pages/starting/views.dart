@@ -26,7 +26,7 @@ class _StartingPageState extends State<StartingPage> {
      }
      if(isStarted) {
        Navigator.pop(context);
-       Get.toNamed('/starting');
+       Get.toNamed('/login');
      }
   }
 
@@ -106,7 +106,7 @@ class _StartingPageState extends State<StartingPage> {
             print(prefs.getBool("isStarted"));
             prefs.setBool("isStarted", true);
             Navigator.pop(context);
-            Get.toNamed('/starting');
+            Get.toNamed('/login');
           },
           pages: getPages(),
         ),
