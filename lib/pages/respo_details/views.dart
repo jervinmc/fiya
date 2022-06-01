@@ -53,9 +53,25 @@ class _RespoDetailsState extends State<RespoDetails> {
         loads = false;
       var  data1 = json.decode(response.body);
         print(data1);
-        data = data1[0]['message'];
+        if(data1.length!=0){
+            data = data1[0]['message'];
+            setState(() {
+              
+            });
+        }
+        else{
+          data = 'No reply yet.';
+          setState(() {
+            
+          });
+        }
+      
       } finally {
+       
         loads = false;
+        setState(() {
+          
+        });
         
       }
     });

@@ -38,15 +38,16 @@ class _ReportState extends State<Report> {
     ..recipients.add('fiyadev@gmail.com')
     ..ccRecipients.addAll(['fiyadev@gmail.com'])
     ..bccRecipients.add(Address('fiyadev@gmail.com'))
-    ..subject = 'Report from fiya app'
+    ..subject = '${_email.text}'
     ..text = '${_message.text}'
-    ..html = "Contact Number : ${_contact_number.text} Email : ${_email.text} <h1>${_message.text}</h1>\n<p></p>";
+    ..html = "Contact Number : ${_contact_number.text} <h1>${_message.text}</h1>\n<p></p>";
 
   try {
     var params = {
         "user_id":_id,
        "message":_message.text,
        "is_respo":"no",
+       "is_viewed":"yes",
        "status":""
       };
     final sendReport = await send(message, smtpServer);
@@ -126,7 +127,7 @@ class _ReportState extends State<Report> {
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(color: Colors.grey[800]),
-                                hintText: "Email",
+                                hintText: "Title",
                                 fillColor: Colors.white70),
                           )
                         ),

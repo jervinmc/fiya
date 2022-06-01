@@ -43,7 +43,12 @@ class _RespoState extends State<Respo> {
        "is_respo":"yes",
        "status":""
       };
+      var params1 = {
+       "is_viewed":"no",
+       "is_replied":"yes"
+      };
     final response = await http.post(Uri.parse(BASE_URL),headers: {"Content-Type": "application/json"},body:json.encode(params));
+    final response1 = await http.patch(Uri.parse(BASE_URL +''+args[0].toString() +'/'),headers: {"Content-Type": "application/json"},body:json.encode(params1));
     AwesomeDialog(
                 context: context,
                 dialogType:DialogType.SUCCES,
@@ -52,6 +57,7 @@ class _RespoState extends State<Respo> {
                 desc: '',
                 btnOkOnPress: () {
                    setState(() {
+                     Get.toNamed('/admin_home');
                       loads=false;
                    });
                 },

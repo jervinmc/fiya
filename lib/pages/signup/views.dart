@@ -28,6 +28,7 @@ class _SignUpState extends State<SignUp> {
 
                   }
                   else{
+                    Navigator.pop(context);
                     Get.toNamed('/login');
                   }
                 },

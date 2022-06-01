@@ -77,6 +77,8 @@ class _AdminHomeState extends State<AdminHome> {
                 btnOkOnPress: () async{
                    final prefs = await SharedPreferences.getInstance();
                    prefs.setBool('isLoggedIn', false);
+                     Navigator.of(context)
+                .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
                   Get.toNamed('/login');
                 },
                 btnCancelOnPress: (){
@@ -121,7 +123,7 @@ class _AdminHomeState extends State<AdminHome> {
                     children: [
                     Container(
             
-                height: 100,
+                height: 120,
                 width:450,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -130,17 +132,42 @@ class _AdminHomeState extends State<AdminHome> {
                   elevation:10,
                  child: Container(
                    padding:EdgeInsets.all(20),
-                   child: Text("Ticket - #${data[index]['id']} - ${data[index]['message']}")
+                   child: Column(
+                     children: [
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                        Container(
+                          width: 250,
+                          child:Column(
+                            children:[
+                                Text("Ticket - #${data[index]['id']} - ${data[index]['message']}")
+                            ]
+                          )
+                        ),
+                         IconButton(onPressed: (){
+                             AwesomeDialog(
+                                context: context,
+                                dialogType:DialogType.QUESTION,
+                                animType: AnimType.BOTTOMSLIDE,
+                                title: 'Are you sure you want to delete this item?',
+                                desc: '',
+                                btnOkOnPress: ()async {
+                                   final response1 = await http.delete(Uri.parse(BASE_URL +'/'+data[index]['id'].toString() +'/'),headers: {"Content-Type": "application/json"});
+                                  setState(() {
+                                     getData();
+                                  });
+                                },
+                                )..show();
+                         }, icon: Icon(Icons.delete,color:Colors.red),)
+                     ],),
+                     data[index]['is_replied']!='yes' ? Text("Not yet replied.") : Text('')
+                     ],
+                   )
                  )
                 ))
                   ],),
-                  trailing: Column(
-                    children: [
-                      // Text("${data[index]['transaction_date']}"),
-                      // Text("Php ${data[index]['price']}"),
-                  
-                    ],
-                  ),
+                 
                 ),
                 );
               },separatorBuilder: (context, index) {

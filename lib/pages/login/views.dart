@@ -21,11 +21,16 @@ class _LoginState extends State<Login> {
   void pageValidation()async {
       final prefs = await SharedPreferences.getInstance();
      print(prefs.getBool("isLoggedIn"));
-     
-     if(prefs.getBool("isLoggedIn")!){
+    print(prefs.getString("_account_type"));
+     if(prefs.getBool("isLoggedIn")! && prefs.getString("_account_type")=='client'){
         Navigator.pop(context);
        Get.toNamed('/starting');
      }
+     else if(prefs.getBool("isLoggedIn")! && prefs.getString("_account_type")=='admin'){
+        Navigator.pop(context);
+       Get.toNamed('/admin_home');
+     }
+
      return;
   }
 
@@ -45,11 +50,15 @@ class _LoginState extends State<Login> {
                 )..show();
     }
   void Login() async {
+        final prefs = await SharedPreferences.getInstance();
     if(_email.text=='admin'){
+      Navigator.pop(context);
+      prefs.setBool("isLoggedIn", true);
+       prefs.setString("_account_type",'admin');
       Get.toNamed('/admin_home');
       return;
     }
-    final prefs = await SharedPreferences.getInstance();
+
       var params = {
         "email":_email.text,
         "password":_password.text
@@ -64,6 +73,7 @@ class _LoginState extends State<Login> {
         print(_data);
         prefs.setInt("_id",_data[0]['id']);
         prefs.setString("_email",_data[0]['email']);
+        prefs.setString("_account_type",'client');
         prefs.setBool("isLoggedIn", true);
         setState(() {
           _load=false;

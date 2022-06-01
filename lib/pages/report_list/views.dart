@@ -19,6 +19,7 @@ class _ReportListsState extends State<ReportLists> {
   
 
  static String BASE_URL = '' + Global.url + '/report_list';
+   static String BASE_URL_REPORT = ''+Global.url+'/report/';
   List data = [];
   bool _load = false;
   Future<String> getData() async {
@@ -76,7 +77,16 @@ class _ReportListsState extends State<ReportLists> {
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   child: new ListTile(
-                  onTap: (){
+                  onTap: ()async{
+                      var params1 = {
+       "is_viewed":"yes"
+      };
+    
+    final response1 = await http.patch(Uri.parse(BASE_URL_REPORT +''+data[index]['id'].toString() +'/'),headers: {"Content-Type": "application/json"},body:json.encode(params1));
+    data[index]['is_viewed']='yes';
+    setState(() {
+      
+    });
                          Get.toNamed('/respo_details',arguments:['${data[index]['id']}']);
                         },
                   title: Column(
@@ -93,7 +103,12 @@ class _ReportListsState extends State<ReportLists> {
                   elevation:10,
                  child: Container(
                    padding:EdgeInsets.all(20),
-                   child: Text("Ticket - #${data[index]['id']} - ${data[index]['message']}")
+                   child: Column(
+                     children: [
+                       Text("Ticket - #${data[index]['id']} - ${data[index]['message']}"),
+                      data[index]['is_viewed']=='no' ?  Text("New message here!",style: TextStyle(color: Colors.green)) : Text(''),
+                     ],
+                   )
                  )
                 ))
                   ],),
