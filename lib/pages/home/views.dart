@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:fiya/pages/chatbot/views.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -15,8 +16,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +41,22 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text('Chatbot'),
               onTap: () {
+                Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPage()));
                 Get.toNamed('/chatbot');
+                 AwesomeDialog(
+                context: context,
+                dialogType:DialogType.INFO,
+                animType: AnimType.BOTTOMSLIDE,
+                title: 'Reminders: English inputs only.',
+                desc: '',
+                btnOkOnPress: () {
+                   setState(() {
+     
+                 
+                   });
+                },
+                )..show();
               },
             ),
             ListTile(
@@ -327,7 +343,7 @@ class _HomeState extends State<Home> {
                Center(
                 child: Container(
                   padding:EdgeInsets.only(top:10,bottom:10),
-                height:700,
+           
                 width:350,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -421,5 +437,8 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+    
   }
+  
 }
+

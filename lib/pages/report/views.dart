@@ -1,5 +1,7 @@
 import 'package:fiya/pages/config/global.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -7,6 +9,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 class Report extends StatefulWidget {
   const Report({Key? key}) : super(key: key);
 
@@ -15,6 +18,23 @@ class Report extends StatefulWidget {
 }
 
 class _ReportState extends State<Report> {
+   String category_select = 'Select Office/Department';
+   final items = [
+    'Select Office/Department',
+    'University Marketing Center',
+    'University Registrar',
+    'University Library',
+    'College of Economics, Management and Development Studies',
+    'College of Nursing',
+    'College of Veterinary Medicine and Biomedical Sciences',
+    'Office of the Student Affairs and Services',
+    'College of Engineering and Information Technology',
+    'College of Sports, Physical Education and Recreation',
+    'College of Education',
+    'College of Arts and Sciences',
+    'College of Criminal Justice',
+    'College of Agriculture, Food, Environment and Natural Resources'
+  ];
   bool loads = false;
   TextEditingController _contact_number = new TextEditingController();
     TextEditingController _message = new TextEditingController();
@@ -25,33 +45,41 @@ class _ReportState extends State<Report> {
   String password = 'fiya12345';
 
   sendEmail() async{
+    DateTime now = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     final prefs = await SharedPreferences.getInstance();
     var _id = prefs.getInt("_id");
+     var _email1 = prefs.getString("_email");
     loads=true;
     setState(() {
       
     });
     final smtpServer = gmail(username, password);
 
-   final message = Message()
-    ..from = Address(username, 'Your name')
-    ..recipients.add('fiyadev@gmail.com')
-    ..ccRecipients.addAll(['fiyadev@gmail.com'])
-    ..bccRecipients.add(Address('fiyadev@gmail.com'))
-    ..subject = '${_email.text}'
-    ..text = '${_message.text}'
-    ..html = "Contact Number : ${_contact_number.text} <h1>${_message.text}</h1>\n<p></p>";
-
+  //  final message = Message()
+  //   ..from = Address(username, 'Your name')
+  //   ..recipients.add('fiyadev@gmail.com')
+  //   ..ccRecipients.addAll(['fiyadev@gmail.com'])
+  //   ..bccRecipients.add(Address('fiyadev@gmail.com'))
+  //   ..subject = '${_email.text}'
+  //   ..text = '${_message.text}'
+  //   ..html = "<h1>${_message.text}</h1>\n<p></p>";
+  print(formattedDate);
   try {
     var params = {
         "user_id":_id,
        "message":_message.text,
        "is_respo":"no",
        "is_viewed":"yes",
-       "status":""
+       "status":"",
+       "email":_email1,
+       "title":_email.text,
+       "category":category_select,
+       "account_type":"You",
+       "date":formattedDate
       };
-    final sendReport = await send(message, smtpServer);
-    print('Message sent: ' + sendReport.toString());
+    // final sendReport = await send(message, smtpServer);
+    // print('Message sent: ' + sendReport.toString());
     final response = await http.post(Uri.parse(BASE_URL),headers: {"Content-Type": "application/json"},body:json.encode(params));
     AwesomeDialog(
                 context: context,
@@ -61,6 +89,8 @@ class _ReportState extends State<Report> {
                 desc: '',
                 btnOkOnPress: () {
                    setState(() {
+                     Navigator.pop(context);
+                     Get.toNamed('/starting');
                       loads=false;
                    });
                 },
@@ -110,6 +140,20 @@ class _ReportState extends State<Report> {
             // ),
             Padding(padding: EdgeInsets.only(top:10)),
             Text("Contact us by sending a message here for your concern"),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
+             Container(
+              
+                width: 370,
+                decoration:BoxDecoration(borderRadius:BorderRadius.circular(5),border:Border.all(color: Colors.black,width:1)),
+              padding: EdgeInsets.only(top: 10),
+              child:DropdownButton<String>(items: items.map(buildMenuItem).toList(),
+              value:category_select,
+              itemHeight: 60,
+                isExpanded:true,
+              onChanged:(category_select)=>setState(() {
+                  this.category_select = category_select!;
+              }))
+            ),
             Container(
                           padding: EdgeInsets.only(top: 20,left:10,right:10),
                           child: TextField(
@@ -131,27 +175,27 @@ class _ReportState extends State<Report> {
                                 fillColor: Colors.white70),
                           )
                         ),
-            Container(
-                          padding: EdgeInsets.only(top: 20,left:10,right:10),
-                          child: TextField(
-                            controller: _contact_number,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(8.0),enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                                       borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                  color: Colors.purple, 
-                                    width: 5.0),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                filled: true,
-                                hintStyle: TextStyle(color: Colors.grey[800]),
-                                hintText: "Contact Number",
-                                fillColor: Colors.white70),
-                          )
-                        ),
+            // Container(
+            //               padding: EdgeInsets.only(top: 20,left:10,right:10),
+            //               child: TextField(
+            //                 controller: _contact_number,
+            //                 decoration: InputDecoration(
+            //                     contentPadding: EdgeInsets.all(8.0),enabledBorder: OutlineInputBorder(
+            //                           borderSide: BorderSide(color: Colors.grey, width: 1.5),
+            //                            borderRadius: BorderRadius.circular(20.0),
+            //                       ),
+            //                     border: OutlineInputBorder(
+            //                       borderSide: BorderSide(
+            //                       color: Colors.purple, 
+            //                         width: 5.0),
+            //                       borderRadius: BorderRadius.circular(20.0),
+            //                     ),
+            //                     filled: true,
+            //                     hintStyle: TextStyle(color: Colors.grey[800]),
+            //                     hintText: "Contact Number",
+            //                     fillColor: Colors.white70),
+            //               )
+            //             ),
             Padding(padding: EdgeInsets.only(top: 10)),
             Container(
               width: 400,
@@ -204,4 +248,8 @@ class _ReportState extends State<Report> {
       ),
     );
   }
+   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+    value:item,
+    child: Container(padding:EdgeInsets.all(10),child:Text(item,style:TextStyle(fontSize: 15)))
+  );
 }

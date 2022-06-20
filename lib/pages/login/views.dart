@@ -154,12 +154,12 @@ class _LoginState extends State<Login> {
                                         fillColor: Colors.white70),
                                   )
                         ),
-                        InkWell(
-                          onTap: (){
-                            Get.toNamed('/resetPassword');
-                          },
-                          child: Text('Forgot Password?'),
-                        ),
+                        // InkWell(
+                        //   onTap: (){
+                        //     Get.toNamed('/resetPassword');
+                        //   },
+                        //   child: Text('Forgot Password?'),
+                        // ),
                         Container(
                           padding: EdgeInsets.only(top: 15),
                           width: 250,

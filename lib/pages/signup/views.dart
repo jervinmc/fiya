@@ -54,7 +54,6 @@ class _SignUpState extends State<SignUp> {
         "email":_email.text,
         "password":_password.text,
         "account_type":'Client',
-
       };
       setState(() {
         _load=true;
@@ -118,36 +117,36 @@ class _SignUpState extends State<SignUp> {
                                 fillColor: Colors.white70),
                           )
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 10),
-                          child: TextField(
-                            controller: _firstname,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(8.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                filled: true,
-                                hintStyle: TextStyle(color: Colors.grey[800]),
-                                hintText: "First Name",
-                                fillColor: Colors.white70),
-                          )
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 10),
-                          child: TextField(
-                            controller: _lastname,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(8.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                filled: true,
-                                hintStyle: TextStyle(color: Colors.grey[800]),
-                                hintText: "Last Name",
-                                fillColor: Colors.white70),
-                          )
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.only(top: 10),
+                        //   child: TextField(
+                        //     controller: _firstname,
+                        //     decoration: InputDecoration(
+                        //       contentPadding: EdgeInsets.all(8.0),
+                        //         border: OutlineInputBorder(
+                        //           borderRadius: BorderRadius.circular(20.0),
+                        //         ),
+                        //         filled: true,
+                        //         hintStyle: TextStyle(color: Colors.grey[800]),
+                        //         hintText: "First Name",
+                        //         fillColor: Colors.white70),
+                        //   )
+                        // ),
+                        // Container(
+                        //   padding: EdgeInsets.only(top: 10),
+                        //   child: TextField(
+                        //     controller: _lastname,
+                        //     decoration: InputDecoration(
+                        //       contentPadding: EdgeInsets.all(8.0),
+                        //         border: OutlineInputBorder(
+                        //           borderRadius: BorderRadius.circular(20.0),
+                        //         ),
+                        //         filled: true,
+                        //         hintStyle: TextStyle(color: Colors.grey[800]),
+                        //         hintText: "Last Name",
+                        //         fillColor: Colors.white70),
+                        //   )
+                        // ),
                         Container(
                      
                           padding: EdgeInsets.only(top: 10),

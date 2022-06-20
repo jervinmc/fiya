@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,6 @@ class _ChatPageState extends State<ChatPage> {
 
   void initState() {
     super.initState();
-    print("RGSRGRGSRGSREGSREGFSDGSRE");
     sessionID = getRandomString(10);
     print(sessionID);
     conversations.add({
@@ -140,18 +140,56 @@ class _ChatPageState extends State<ChatPage> {
         "type": BubbleType.sendBubble,
         "isMe": false
       });
+      //  conversations.add({
+      //   "message": "Reminders: English inputs only.",
+      //   "type": BubbleType.sendBubble,
+      //   "isMe": false
+      // });
       setState(() {
         
       });
     _initChatbot();
+    getData();
+  }
+  void getData(){
+    setState(() {
+      
+    });
+      // AwesomeDialog(
+      //           context: context,
+      //           dialogType:DialogType.INFO,
+      //           animType: AnimType.BOTTOMSLIDE,
+      //           title: "Reminder",
+      //           desc: "English inputs only.",
+      //           btnOkOnPress: () {},
+      //           )..show();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff017e00),
           title: Text('Chatbot'),
+          leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: (){
+              AwesomeDialog(
+                context: context,
+                dialogType:DialogType.QUESTION,
+                animType: AnimType.BOTTOMSLIDE,
+                title: "Chat history will be deleted upon exit, are you sure?",
+                desc: "",
+                btnOkOnPress: () {
+                  Navigator.pop(context,true);
+                  Navigator.pop(context,true);
+                },
+                btnCancelOnPress: (){
+
+                }
+                )..show();
+          ;})
+          
         ),
         body: Stack(
           children: [
@@ -212,7 +250,23 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 )),
           ],
-        ));
+        )), onWillPop: ()async{
+           AwesomeDialog(
+                context: context,
+                dialogType:DialogType.QUESTION,
+                animType: AnimType.BOTTOMSLIDE,
+                title: "Chat history will be deleted upon exit, are you sure?",
+                desc: "",
+                btnOkOnPress: () {
+                  Navigator.pop(context,true);
+                  Navigator.pop(context,true);
+                },
+                btnCancelOnPress: (){
+
+                }
+                )..show();
+          return false;
+        });
   }
 
   getSenderView(CustomClipper clipper, BuildContext context, String message) =>
