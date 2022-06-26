@@ -70,6 +70,13 @@ class _LoginState extends State<Login> {
       String jsonsDataString = response.body.toString();
       final _data = jsonDecode(jsonsDataString);
       if(_data!='no_data'){
+         if(_data[0]['status']!='Activated'){
+              notify(DialogType.ERROR, 'Your account is deactivated.', "Please contact the admin.");
+              setState(() {
+                _load=false;
+              });
+              return;
+        }
         print(_data);
         prefs.setInt("_id",_data[0]['id']);
         prefs.setString("_email",_data[0]['email']);
@@ -78,6 +85,7 @@ class _LoginState extends State<Login> {
         setState(() {
           _load=false;
         });
+       
           Navigator.pop(context);
         Get.toNamed('/starting');
       

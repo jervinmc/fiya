@@ -131,20 +131,25 @@ class _ChatPageState extends State<ChatPage> {
     sessionID = getRandomString(10);
     print(sessionID);
     conversations.add({
-        "message": "Hi! I'm FiYA, your personal chatbot assistant, how may I help you?",
-        "type": BubbleType.sendBubble,
-        "isMe": false
-      });
-       conversations.add({
-        "message": "You can type 'suggestion' for a list of FAQs about the university to start!",
+        "message": "Hi! I'm FIYA, how can I help you?",
         "type": BubbleType.sendBubble,
         "isMe": false
       });
       //  conversations.add({
-      //   "message": "Reminders: English inputs only.",
+      //   "message": "You can type 'suggestion' for a list of FAQs about the university to start!",
       //   "type": BubbleType.sendBubble,
       //   "isMe": false
       // });
+       conversations.add({
+        "message": "The chatbot can only answer questions about the following offices/departments: \nCollege of Agriculture, Food, Environment and Natural Resources \nCollege of Arts and Sciences \nCollege of Criminal Justice \nCollege of Economics, Management and Development Studies \nCollege of Education \nCollege of Engineering and Information Technology \nCollege of Nursing \nCollege of Sports and Physical Education and Recreation \nCollege of Veterinary Medicine and Biomedical Sciences Office of the Student Affairs and Services\nUniversity Library \nUniversity Marketing Center \nUniversity Registrar",
+        "type": BubbleType.sendBubble,
+        "isMe": false
+      });
+       conversations.add({
+        "message": "You can type ‘suggestion’ for a list of FAQs about the university to start a conversation!",
+        "type": BubbleType.sendBubble,
+        "isMe": false
+      });
       setState(() {
         
       });
@@ -219,7 +224,7 @@ class _ChatPageState extends State<ChatPage> {
                   color: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   height: 50,
-                  width: 350,
+                  width: MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

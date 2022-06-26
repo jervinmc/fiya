@@ -18,22 +18,22 @@ class Report extends StatefulWidget {
 }
 
 class _ReportState extends State<Report> {
-   String category_select = 'Select Office/Department';
-   final items = [
-    'Select Office/Department',
-    'University Marketing Center',
-    'University Registrar',
-    'University Library',
-    'College of Economics, Management and Development Studies',
-    'College of Nursing',
-    'College of Veterinary Medicine and Biomedical Sciences',
-    'Office of the Student Affairs and Services',
-    'College of Engineering and Information Technology',
-    'College of Sports, Physical Education and Recreation',
-    'College of Education',
+  String category_select = '';
+  final items = [
+    'College of Agriculture, Food, Environment and Natural Resources',
     'College of Arts and Sciences',
     'College of Criminal Justice',
-    'College of Agriculture, Food, Environment and Natural Resources'
+    'College of Economics, Management and Development Studies',
+    'College of Education',
+    'College of Engineering and Information Technology',
+    'College of Nursing',
+    'College of Sports, Physical Education and Recreation',
+    'College of Veterinary Medicine and Biomedical Sciences',
+    'Office of the Student Affairs and Services',
+    'University Infirmary',
+    'University Library',
+    'University Marketing Center',
+    'University Registrar',
   ];
   bool loads = false;
   TextEditingController _contact_number = new TextEditingController();
@@ -45,6 +45,23 @@ class _ReportState extends State<Report> {
   String password = 'fiya12345';
 
   sendEmail() async{
+    if(category_select==''){
+       AwesomeDialog(
+                context: context,
+                dialogType:DialogType.SUCCES,
+                animType: AnimType.BOTTOMSLIDE,
+                title: 'Please select office/department.',
+                desc: '',
+                btnOkOnPress: () {
+                   setState(() {
+                     Navigator.pop(context);
+                     Get.toNamed('/starting');
+                      loads=false;
+                   });
+                },
+                )..show();
+                return;
+    }
     DateTime now = DateTime.now();
 String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     final prefs = await SharedPreferences.getInstance();
@@ -111,7 +128,7 @@ String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     return Scaffold(
       appBar: AppBar(
         backgroundColor:Color(0xff017e00),
-        title: Text('Report'),
+        title: Text('Contact Us'),
       ),
       body: Container(
         color: Color(0xffeafaec),
@@ -147,7 +164,7 @@ String formattedDate = DateFormat('yyyy-MM-dd').format(now);
                 decoration:BoxDecoration(borderRadius:BorderRadius.circular(5),border:Border.all(color: Colors.black,width:1)),
               padding: EdgeInsets.only(top: 10),
               child:DropdownButton<String>(items: items.map(buildMenuItem).toList(),
-              value:category_select,
+               hint: category_select=='' ? Text("Select Office/Department") : Text('${category_select}'),
               itemHeight: 60,
                 isExpanded:true,
               onChanged:(category_select)=>setState(() {

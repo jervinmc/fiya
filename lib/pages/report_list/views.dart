@@ -91,7 +91,7 @@ class _ReportListsState extends State<ReportLists> {
                         data[index]['is_viewed'] = 'yes';
                         setState(() {});
                         Get.toNamed('/respo_details',
-                            arguments: ['${data[index]['id']}']);
+                            arguments: ['${data[index]['id']}','${data[index]['message']}']);
                       },
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

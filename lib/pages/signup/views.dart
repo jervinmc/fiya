@@ -68,7 +68,7 @@ class _SignUpState extends State<SignUp> {
         _password.text="";
       }
       else{
-        notify(DialogType.ERROR, 'Account is already exists.', "Please use other account.");
+        notify(DialogType.ERROR, 'Account already exists.', "Please use other account.");
        setState(() {
          _load=false;
        });

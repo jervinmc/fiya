@@ -21,22 +21,24 @@ class MapPageState extends State<MapPage> {
   bool isReady = false;
   LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
   LatLng DEST_LOCATION = LatLng(37.335685, -122.0605916);
-  String category_select = 'Select Office/Department';
+  String category_select = '';
   final items = [
-    'Select Office/Department',
-    'University Marketing Center',
-    'University Registrar',
-    'University Library',
-    'College of Economics, Management and Development Studies',
-    'College of Nursing',
-    'College of Veterinary Medicine and Biomedical Sciences',
-    'Office of the Student Affairs and Services',
-    'College of Engineering and Information Technology',
-    'College of Sports, Physical Education and Recreation',
-    'College of Education',
+    'College of Agriculture, Food, Environment and Natural Resources',
+
     'College of Arts and Sciences',
     'College of Criminal Justice',
-    'College of Agriculture, Food, Environment and Natural Resources'
+    'College of Economics, Management and Development Studies',
+    'College of Education',
+    'College of Engineering and Information Technology',
+    'College of Nursing',
+    'College of Sports, Physical Education and Recreation',
+    'College of Veterinary Medicine and Biomedical Sciences',
+    'Office of the Student Affairs and Services',
+     'University Infirmary',
+    'University Library',
+    'University Marketing Center',
+    'University Registrar',
+    
   ];
   final Set<Polyline> _polyline = {};
   Completer<GoogleMapController> _controller = Completer();
@@ -152,7 +154,7 @@ class MapPageState extends State<MapPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 500,
+            height: 350,
             width: 500,
             child: GoogleMap(
                 scrollGesturesEnabled: true,
@@ -178,16 +180,20 @@ class MapPageState extends State<MapPage> {
                   border: Border.all(color: Colors.black, width: 1)),
               padding: EdgeInsets.only(top: 10),
               child: DropdownButton<String>(
+                hint: category_select=='' ? Text("Select Office/Department") : Text('${category_select}'),
                 itemHeight: 60,
                 isExpanded:true,
                   items: items.map(buildMenuItem).toList(),
-                  value: category_select,
+              
                   onChanged: (category_select) => setState(() {
                         this.category_select = category_select!;
                         setState(() {
                           // 'University Marketing Center','University Registrar','University Library','College of Economics','College of Nursing','College of Veterenary Medicine'
                           if (category_select == 'University Library') {
                             DEST_LOCATION = LatLng(14.199478, 120.882407);
+                          }
+                          if (category_select == 'University Infirmary') {
+                            DEST_LOCATION = LatLng(14.197527, 120.880091);
                           }
                           if (category_select ==
                               'University Marketing Center') {
@@ -252,6 +258,23 @@ class MapPageState extends State<MapPage> {
                                   initialCameraPosition));
                         });
                       }))),
+                   Container(
+            padding: EdgeInsets.all(10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 10,
+              child:Padding(
+                padding: EdgeInsets.all(50),
+                child:  Column(children: [
+                  Text('Nearest Landmark:'),
+                  Padding(padding: EdgeInsets.only(top:10)),
+                category_select=='College of Agriculture, Food, Environment and Natural Resources' ? Text('Beside University Library. \nIn front of College of Economics, Management and Development Studies (CEMDS)') :category_select=='College of Arts and Sciences' ? Text('Beside University Library. \nBehind College of Nursing') : category_select=='College of Criminal Justice' ? Text('College of Economics, Management and Development Studies') : category_select=='College of Criminal Justice' ? Text('Beside CvSU Research Building. \nIn front of College of Agriculture, Food, Environment and Natural Resources (CAFENR)') : category_select=='College of Education' ? Text('CvSU Gate 2. \nBeside Administration Building') : category_select=='College of Engineering and Information Technology' ? Text('CvSU Gate 2. \nIn front of Administration Building') : category_select=='College of Nursing' ? Text('Beside Hostel Tropicana. \nBehind College of Arts and Sciences (CAS)')  : category_select=='College of Nursing' ? Text('Beside Hostel Tropicana Behind College of Arts and Sciences (CAS)') : category_select=='College of Sports, Physical Education and Recreation' ? Text('CvSU Gymnasium. \nBeside Office of the Student Affairs and Services (OSAS) Building') : category_select=='College of Veterinary Medicine and Biomedical Sciences' ? Text('CvSU Saluysoy. \nIn front of Department of Animal Science Building') : category_select=='University Infirmary' ? Text('Beside College of Criminal Justice (CCJ) Building') : category_select=='University Library' ? Text('In front of College of Arts and Sciences (CAS) Building. \nBeside College of Agriculture, Food, Environment and Natural Resources (CAFENR)') : category_select=='University Marketing Center' ? Text('Beside CvSU Gate 1 University Mall (U-Mall)') : category_select=='University Registrar' ? Text('Beside CvSU Gymnasium In Office of the Student Affairs and Services (OSAS) Building') :  category_select=='College of Economics, Management and Development Studies' ? Text('Beside CvSU Research Building. \nIn front of College of Agriculture, Food, Environment and Natural Resources (CAFENR)') :  category_select=='Office of the Student Affairs and Services' ? Text('CvSU Oval.\nBeside CvSU Gymnasium')    : Text('')
+              ],),
+              )
+            )
+      ),
           // Container(
           //   padding: EdgeInsets.all(10),
           //   child: Card(

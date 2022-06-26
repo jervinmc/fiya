@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
                 context: context,
                 dialogType:DialogType.INFO,
                 animType: AnimType.BOTTOMSLIDE,
-                title: 'Reminders: English inputs only.',
+                title: 'Reminders: English inputs only and no typographical error.',
                 desc: '',
                 btnOkOnPress: () {
                    setState(() {
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text('Report'),
+              title: Text('Contact us'),
               onTap: () {
                 Get.toNamed('/report');
               },
@@ -90,8 +90,9 @@ class _HomeState extends State<Home> {
                 btnOkOnPress: () async{
                    final prefs = await SharedPreferences.getInstance();
                    prefs.setBool('isLoggedIn', false);
+                   Navigator.pop(context);
                    Navigator.of(context)
-    .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+    .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => true);
                 },
                 btnCancelOnPress: (){
 

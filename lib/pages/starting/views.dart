@@ -48,8 +48,8 @@ class _StartingPageState extends State<StartingPage> {
               fontWeight: FontWeight.bold),
         ),
         body:
-            " Greetings, my Friend I'M FIYA! Find Your Answer, an AI Assistant for Cavite State University - Main Campus",
-        footer: Text('Proceed'),
+            "Greetings, I’m FIYA! An AI assistant in Cavite State University – Don Severino de las Alas Campus.",
+        footer: Text(''),
         decoration: const PageDecoration(
           pageColor: Colors.white,
         ),
@@ -65,8 +65,8 @@ class _StartingPageState extends State<StartingPage> {
               fontWeight: FontWeight.bold),
         ),
         body:
-            "As a chatbot, I can provide you with school-related information that you may need so you can ask me anytime, anywhere.",
-        footer: Text('Start'),
+            "As a chatbot, I could provide you school-related information that you might need.",
+        footer: Text(''),
         decoration: const PageDecoration(
           pageColor: Colors.white,
         ),
@@ -75,8 +75,8 @@ class _StartingPageState extends State<StartingPage> {
         image: Image.network(
             'https://img.freepik.com/free-vector/family-couple-psychologist-session-flat-cartoon-vector-illustration-isolated_181313-1619.jpg?size=338&ext=jpg'),
         body:
-            'I am also equipped with a Map wherein you can see the school roads and buildings along with their respective descriptions. This function will allow you to navigate around the school with ease.',
-        footer: Text('Finish'),
+            'I am also equipped with a Map that will allow you to choose specific offices/departments to navigate around the school with ease.',
+        footer: Text(''),
         titleWidget: Text(
           "Let's get started !",
           style: TextStyle(

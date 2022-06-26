@@ -138,7 +138,7 @@ class _RespoDetailsState extends State<RespoDetails> {
              padding: EdgeInsets.all(10),
              child:  Container(
             
-                height: 400,
+                height: 250,
                 width:450,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -151,8 +151,11 @@ class _RespoDetailsState extends State<RespoDetails> {
 
                      crossAxisAlignment:CrossAxisAlignment.start,
                      children: [
+                               Text('Concerns: ${args[1]}'),
+                               Divider(),
                       Container(
-                        height:350,
+                
+                        height:200,
                         child: ListView.builder(itemCount: data.length,itemBuilder:(BuildContext context, index){
                          return Column(
                              crossAxisAlignment:CrossAxisAlignment.start,
